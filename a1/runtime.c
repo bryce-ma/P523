@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 #ifdef APPLE /* MacOS */
 #define SCHEME_ENTRY scheme_entry
 #else
