@@ -1,5 +1,6 @@
 ;; Bryce Ma
 ;; bryce.seeker@gmail.com
+;; May 9, 2016
 
 (load "match.ss")
 
@@ -35,9 +36,10 @@
       (lambda (x)
 	(match x
 	       [(set! ,var1 ,var2) (guard (symbol? var2)) (Var var1) (Var var2)]  ;;handle a pair of symbol first
-	       [(set! ,var1 ,int64) (guard (int64? int64)) (Var var1)]
+	       [(set! ,var1 ,int64) (guard (and (number? int64) (int64? int64))) (Var var1)]
 	       [(set! ,var1 (,binop ,var1 ,var2)) (guard (symbol? var2)) (Var var1) (Var var2) (Binop binop)]
 	       [(set! ,var1 (,binop ,var1 ,int32)) (guard (int32? int32)) (Var var1) (Binop binop)]
+	       [(set! ,var1 (,op ,var2 ,any)) (error 'verify "first variables followed set! and binop should be same")]
 	       [,not-statem (error 'verify "invalid statement " not-statem)])))
     (define Var
       (lambda (x)
